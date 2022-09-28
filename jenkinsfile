@@ -1,0 +1,32 @@
+pipeline
+{
+
+agent any
+
+tools{
+  'maven3.8.6'
+}
+
+triggers{
+pollSCM('* * * * *')
+}
+
+stages{
+  
+  stage('checkoutcode')
+  {
+  steps{
+  git credentialsId: 'jenkins-gitinteg', url: 'https://github.com/prasannaburugapalli/jersey-jetty-executable-war-sample.git'
+    }
+  }
+
+  stage('Build')
+  {
+  steps{
+  sh "mvn clean package"
+  }
+ }
+
+}
+
+}
